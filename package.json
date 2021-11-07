@@ -4,7 +4,8 @@
   "description": "Usuarios, token, auth",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_DEBUG=dev nodemon index"
+    "test": "NODE_DEBUG=dev nodemon index",
+    "start": "NODE_DEBUG=prod node index"
   },
   "author": "Josue Lopez",
   "license": "ISC",
