@@ -10,7 +10,7 @@ const cors = require('cors');
 const usuarioRoute = require('./routes/usuario/usuario.routes');
 const { dbConnection } = require('./database/config.database');
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT;  
 
 app.listen(PORT, () => {
     debuggin(`Server listen on port ${PORT}`);
