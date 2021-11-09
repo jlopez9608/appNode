@@ -7,6 +7,7 @@ const app = express();
 require('dotenv').config();
 const cors = require('cors');
 // Local
+const authRoute = require('./routes/auth/auth.routes');
 const usuarioRoute = require('./routes/usuario/usuario.routes');
 const { dbConnection } = require('./database/config.database');
 
@@ -17,11 +18,11 @@ app.listen(PORT, () => {
 });
 
 // DB connection
-
 const conectarDB = async () =>{
     await dbConnection();
 }
 conectarDB();
 app.use(cors());
 app.use(express.json());
+app.use('/api/auth', authRoute);
 app.use('/api', usuarioRoute);

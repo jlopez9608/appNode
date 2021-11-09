@@ -1,8 +1,15 @@
 const express = require('express');
 const { check } = require('express-validator');
 
-const { validarCampos } = require('../../middlewares/validar-campos.middleware');
-const { rolValid, emailExist, userExist } = require('../../helper/db-validators');
+const { rolValid,
+    emailExist,
+    userExist
+} = require('../../helper/db-validators');
+
+const { validarCampos, 
+    validarJWT,
+    isAdmin,
+    roleExist } = require('../../middlewares')
 
 const appRoute = express();
 const { 
@@ -14,7 +21,10 @@ const {
  } = require('../../controller/usuario/usuario.controller');
 
  appRoute.route('/usuario')
-    .get( getUsuario )
+    .get( validarJWT,
+        // isAdmin,
+        roleExist('ADMIN_ROL', 'VENTAS_ROL'),
+        getUsuario )
     .post([
         check('nombre', 'El nombre no es valido').not().isEmpty(),
         check('password', 'El password no es valido, mas de 6 letras').isLength({ min: 6 }),
@@ -24,7 +34,6 @@ const {
         check('rol').custom( rolValid ),
         validarCampos
     ],postUsuario)
-    .patch( patchUsuario );
 
     appRoute.route('/usuario/:id')
     .put( [
